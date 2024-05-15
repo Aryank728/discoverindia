@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { collection, addDoc, Timestamp, getFirestore } from 'firebase/firestore';
-import { getStorage, ref, uploadBytes, listAll, getDownloadURL } from 'firebase/storage';
-import { app } from '../firebase';
+import { app } from '../firebase'; // Make sure to adjust the import according to your setup
 import { useNavigate } from 'react-router-dom';
 
 const indianStates = [
@@ -44,8 +43,6 @@ const indianStates = [
 ];
 
 const Firestore = getFirestore(app);
-const storage = getStorage(app);
-const storageRef = ref(storage);
 
 function AdminForm() {
     const [state, setState] = useState('');
@@ -59,19 +56,8 @@ function AdminForm() {
     const [governor, setGovernor] = useState('');
     const [population, setPopulation] = useState('');
     const [chiefMinister, setChiefMinister] = useState('');
-    const [showModal, setShowModal] = useState(false); // Modal state
+    const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
-
-    const uploadFile = (file) => {
-        const imageRef = ref(storageRef, `images/${file.name}`);
-        return uploadBytes(imageRef, file);
-    };
-
-    useEffect(() => {
-        listAll(storageRef).catch((error) => {
-            console.error('Error listing images: ', error);
-        });
-    }, []);
 
     const handleStateImageChange = (e) => {
         const image = e.target.files[0];
@@ -92,42 +78,47 @@ function AdminForm() {
 
             // Validate if the formation date is valid
             if (isNaN(formationDateObj)) {
-                alert('Invalid formation date');
+                console.error('Invalid formation date');
                 return;
             }
 
-            // Upload images
-            await Promise.all([
-                uploadFile(stateImage),
-                uploadFile(placeImage)
-            ]).then(async ([stateUpload, placeUpload]) => {
-                const stateImageUrl = await getDownloadURL(stateUpload);
-                const placeImageUrl = await getDownloadURL(placeUpload);
-
-                // Add document to Firestore
-                await addDoc(collection(Firestore, 'state'), {
-                    state,
-                    capital,
-                    stateImage: stateImageUrl,
-                    stateDescription,
-                    famousPlace,
-                    placeImage: placeImageUrl,
-                    placeDescription,
-                    formationDate: Timestamp.fromDate(new Date(formationDateObj.setHours(0, 0, 0, 0))),
-                    governor,
-                    population: parseInt(population),
-                    chiefMinister
-                });
-
-                setShowModal(true); // Show modal on successful submission
-                setTimeout(() => {
-                    setShowModal(false); // Hide modal after 3 seconds
-                    navigate('/'); // Redirect to success page
-                }, 3000);
+            // Add document to Firestore
+            await addDoc(collection(Firestore, 'states'), {
+                state,
+                capital,
+                stateDescription,
+                famousPlace,
+                placeDescription,
+                formationDate: Timestamp.fromDate(formationDateObj), // Convert to Timestamp
+                governor,
+                population: parseInt(population),
+                chiefMinister
             });
+
+            console.log('Document added successfully');
+            clearForm();
+            setShowModal(true);
+            setTimeout(() => {
+                setShowModal(false);
+                navigate('/');
+            }, 3000);
         } catch (error) {
             console.error('Error adding document: ', error);
         }
+    };
+
+    const clearForm = () => {
+        setState('');
+        setCapital('');
+        setStateImage(null);
+        setStateDescription('');
+        setFamousPlace('');
+        setPlaceImage(null);
+        setPlaceDescription('');
+        setFormationDate('');
+        setGovernor('');
+        setPopulation('');
+        setChiefMinister('');
     };
 
     return (
@@ -273,9 +264,9 @@ function AdminForm() {
                 </form>
             </div>
             {showModal && (
-                <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-                    <div className="bg-white p-6 rounded-lg shadow-lg">
-                        <p className="text-green-500 text-lg font-semibold">Data stored successfully!</p>
+                <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white p-4 rounded-lg shadow-lg">
+                        <p className="text-lg font-semibold">Form submitted successfully!</p>
                     </div>
                 </div>
             )}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { collection, addDoc, Timestamp, getFirestore } from 'firebase/firestore';
-import { app } from '../firebase'; // Make sure to adjust the import according to your setup
+import { ref, uploadBytes } from 'firebase/storage';
+import { app, image } from '../firebase'; // Make sure to adjust the import according to your setup
 import { useNavigate } from 'react-router-dom';
 
 const indianStates = [
@@ -59,6 +60,24 @@ function AdminForm() {
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
+    const stateHandleClcik = () => {
+        if (stateImage) {
+            const stateimgRef = ref(image, `stateimage/${image.name}`)
+            uploadBytes(stateimgRef, stateImage, { contentType: stateImage.type }).then(() => {
+                console.log('Image uploaded successfully');
+            });
+        }
+    }
+
+    const placeHandleClick = () => {
+        if (placeImage) {
+            const placeimgRef = ref(image, `placeimage/${image.name}`)
+            uploadBytes(placeimgRef, placeImage, { contentType: placeImage.type }).then(() => {
+                console.log('Image uploaded successfully');
+            });
+        }
+    }
+
     const handleStateImageChange = (e) => {
         const image = e.target.files[0];
         setStateImage(image);
@@ -94,7 +113,6 @@ function AdminForm() {
                 population: parseInt(population),
                 chiefMinister
             });
-
             console.log('Document added successfully');
             clearForm();
             setShowModal(true);
@@ -158,6 +176,7 @@ function AdminForm() {
                         <input
                             id="stateImage"
                             onChange={handleStateImageChange}
+                            onClick={stateHandleClcik}
                             type="file"
                             accept="image/*"
                             required
@@ -193,6 +212,7 @@ function AdminForm() {
                         <input
                             id="placeImage"
                             onChange={handlePlaceImageChange}
+                            onClick={placeHandleClick}
                             type="file"
                             accept="image/*"
                             required

@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './App.css';// Ensure this matches the filename
-import Sample from './Pages/sample'; // Ensure this matches the filename
+import './App.css';
+import Sample from './Pages/sample';
 import SignupForm from './Pages/Signup';
 import LoginForm from './Pages/Login';
 import AdminForm from './Pages/AdminForm';
@@ -13,7 +13,7 @@ function App() {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/hi" element={<Sample />} />
           <Route path="/signup" element={<SignupForm />} />
-          <Route path="/" element={<AdminForm />} />
+          <Route path="/adminform" element={<AdminForm />} />
         </Routes>
       </div>
     </Router>

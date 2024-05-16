@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { collection, addDoc, Timestamp, getFirestore } from 'firebase/firestore';
 import { ref, uploadBytes } from 'firebase/storage';
-import { app, image } from '../firebase'; // Make sure to adjust the import according to your setup
+import { app, image } from '../firebase'; // Adjust the import according to your setup
 import { useNavigate } from 'react-router-dom';
 
 const indianStates = [
@@ -60,64 +60,56 @@ function AdminForm() {
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
-    const stateHandleClcik = () => {
-        if (stateImage) {
-            const stateimgRef = ref(image, `stateimage/${image.name}`)
-            uploadBytes(stateimgRef, stateImage, { contentType: stateImage.type }).then(() => {
-                console.log('Image uploaded successfully');
-            });
-        }
-    }
-
-    const placeHandleClick = () => {
-        if (placeImage) {
-            const placeimgRef = ref(image, `placeimage/${image.name}`)
-            uploadBytes(placeimgRef, placeImage, { contentType: placeImage.type }).then(() => {
-                console.log('Image uploaded successfully');
-            });
-        }
-    }
+    const uploadImage = async (imageFile, folder) => {
+        const imageRef = ref(image, `${folder}/${imageFile.name}`);
+        await uploadBytes(imageRef, imageFile, {
+            contentType: imageFile.type,
+        });
+        console.log(`${folder} image uploaded successfully`);
+        return imageRef.fullPath;
+    };
 
     const handleStateImageChange = (e) => {
-        const image = e.target.files[0];
-        setStateImage(image);
+        setStateImage(e.target.files[0]);
     };
 
     const handlePlaceImageChange = (e) => {
-        const image = e.target.files[0];
-        setPlaceImage(image);
+        setPlaceImage(e.target.files[0]);
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
-            // Convert formationDate to a JavaScript Date object
             const formationDateObj = new Date(formationDate);
 
-            // Validate if the formation date is valid
             if (isNaN(formationDateObj)) {
                 console.error('Invalid formation date');
                 return;
             }
 
-            // Add document to Firestore
+            const stateImagePath = await uploadImage(stateImage, 'stateimage');
+            const placeImagePath = await uploadImage(placeImage, 'placeimage');
+
             await addDoc(collection(Firestore, 'states'), {
                 state,
                 capital,
                 stateDescription,
                 famousPlace,
                 placeDescription,
-                formationDate: Timestamp.fromDate(formationDateObj), // Convert to Timestamp
+                formationDate: Timestamp.fromDate(formationDateObj),
                 governor,
                 population: parseInt(population),
-                chiefMinister
+                chiefMinister,
+                stateImagePath,
+                placeImagePath,
             });
             console.log('Document added successfully');
             clearForm();
             setShowModal(true);
             setTimeout(() => {
                 setShowModal(false);
+                clearForm();  // <--- Clear form after successful submission
                 navigate('/');
             }, 3000);
         } catch (error) {
@@ -137,6 +129,8 @@ function AdminForm() {
         setGovernor('');
         setPopulation('');
         setChiefMinister('');
+        document.getElementById('stateImage').value = ''; // <--- Reset file input
+        document.getElementById('placeImage').value = ''; // <--- Reset file input
     };
 
     return (
@@ -176,7 +170,6 @@ function AdminForm() {
                         <input
                             id="stateImage"
                             onChange={handleStateImageChange}
-                            onClick={stateHandleClcik}
                             type="file"
                             accept="image/*"
                             required
@@ -212,7 +205,6 @@ function AdminForm() {
                         <input
                             id="placeImage"
                             onChange={handlePlaceImageChange}
-                            onClick={placeHandleClick}
                             type="file"
                             accept="image/*"
                             required

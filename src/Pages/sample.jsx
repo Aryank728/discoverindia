@@ -1,6 +1,8 @@
 import React from 'react';
 import { getAuth, signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../Components/Navbar';
+import Footer from "../Components/Footer"
 
 const Sample = () => {
     const auth = getAuth();
@@ -17,11 +19,12 @@ const Sample = () => {
     };
 
     return (
-        <div>
+        <div className="bg-cover-black">
+            <Navbar />
             Hello, you're logged in with Google Provider <br />
             <button onClick={handleLogout}>Logout</button>
+            <Footer />
         </div>
     );
 };
-
 export default Sample;

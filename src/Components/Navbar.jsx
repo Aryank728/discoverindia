@@ -10,7 +10,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="w-full h-24 flex flex-col justify-center items-center bg-transparent lg:bg-transparent sticky z-20">
+        <nav className="w-full h-24 flex flex-col justify-center items-center bg-transparent sticky top-0 z-20">
             <div className="container mx-auto lg:px-6">
                 <div className="lg:w-full w-11/12 mx-auto h-full flex justify-between items-center">
                     <div className="flex flex-col gap-y-4 lg:w-1/3">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useHistory } from 'react-router-use-history'
+import { useHistory } from 'react-router-use-history';
 import IndiaMap from '@svg-maps/india';
 import { SVGMap } from 'react-svg-map';
 import 'react-svg-map/lib/index.css';
@@ -33,13 +33,19 @@ const Map = () => {
     }, []);
 
     return (
-        <div ref={mapContainerRef} className="mx-auto w-1/4 relative">
+        <div ref={mapContainerRef} className="relative">
             <SVGMap
                 map={IndiaMap}
                 className="w-full h-auto india-map stroke-black stroke-1"
                 onLocationClick={handleLocationClick}
+                customize={{
+                    India: {
+                        fill: "none",
+                        stroke: "#000",
+                        strokeWidth: 1
+                    }
+                }}
             />
-            {/* Removed the div for displaying selectedState */}
         </div>
     );
 };

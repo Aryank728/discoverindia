@@ -17,10 +17,10 @@ const Sidebar = () => {
                 <svg
                     onClick={() => setShowSidebar(!showSidebar)}
                     className="fixed z-30 flex items-center cursor-pointer right-10 top-6"
-                    fill="#2563EB"
+                    fill="#2D3748"  // Dark gray color
                     viewBox="0 0 100 80"
-                    width="20" // Changed from 40 to 30
-                    height="30" // Changed from 40 to 30
+                    width="30" // Adjusted width
+                    height="30" // Adjusted height
                     aria-label="Open sidebar"
                     role="button"
                 >
@@ -31,7 +31,7 @@ const Sidebar = () => {
             )}
 
             <div
-                className={`top-0 right-0 w-[20vw] bg-white bg-opacity-30 backdrop-filter backdrop-blur-lg p-10 pl-20 text-white fixed h-full z-40 ease-in-out duration-300 ${showSidebar ? "translate-x-0" : "translate-x-full"
+                className={`top-0 right-0 w-[75vw] sm:w-[60vw] md:w-[40vw] lg:w-[30vw] xl:w-[20vw] bg-white bg-opacity-30 backdrop-filter backdrop-blur-lg p-10 pl-20 text-white fixed h-full z-40 ease-in-out duration-300 transform ${showSidebar ? "translate-x-0" : "translate-x-full"
                     }`}
             >
                 <h3 className="mt-20 text-4xl font-semibold text-white">

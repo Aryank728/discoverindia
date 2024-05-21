@@ -1,13 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Navbar from "../Components/Navbar";
 import Sidebar from "../Components/Sidebar";
 import Footer from "../Components/Footer";
 import Map from "../Components/indiaMap";
 import BIRDS from 'vanta/dist/vanta.birds.min';
+import VanillaTilt from 'vanilla-tilt';
 
 export default function Sample() {
     const [vantaEffect, setVantaEffect] = useState(null);
     const vantaRef = useRef(null);
+    const tiltRef = useRef(null);
 
     useEffect(() => {
         try {
@@ -15,7 +17,9 @@ export default function Sample() {
                 setVantaEffect(
                     BIRDS({
                         el: vantaRef.current,
-                        color: 0x000000,
+                        color1: 0x1e90ff,
+                        color2: 0xff6347,
+                        backgroundAlpha: 0.0,
                         waveHeight: 20,
                         shininess: 50,
                         waveSpeed: 1.5,
@@ -23,8 +27,15 @@ export default function Sample() {
                     })
                 );
             }
+            // Initialize tilt effect on the map container
+            VanillaTilt.init(tiltRef.current, {
+                max: 25,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.5,
+            });
         } catch (error) {
-            console.error('Vanta effect initialization error:', error);
+            console.error('Initialization error:', error);
         }
         return () => {
             if (vantaEffect) vantaEffect.destroy();
@@ -32,16 +43,20 @@ export default function Sample() {
     }, [vantaEffect]);
 
     return (
-        <div className="min-h-screen bg-gradient-animated bg-[length:400%_400%] animate-gradient-animate relative">
-            <div ref={vantaRef} className="absolute inset-0 z-0"></div>
-            <div className="relative z-10">
+        <>
+            <div className="min-h-screen flex flex-col bg-gradient-animated bg-[length:400%_400%] animate-gradient-animate relative overflow-hidden">
+                <div ref={vantaRef} className="absolute inset-0 z-0"></div>
                 <Navbar />
-                <Sidebar />
-                <div className="flex justify-end items-right min-h-screen">
-                    <Map />
+                <div className="flex flex-1 justify-center items-start mt-2">
+                    <Sidebar />
+                    <div className="w-full max-w-[800px] relative">
+                        <div ref={tiltRef} className="tilt-div w-full h-[600px]">
+                            <Map />
+                        </div>
+                    </div>
                 </div>
-                <Footer />
             </div>
-        </div>
+            <Footer />
+        </>
     );
 }

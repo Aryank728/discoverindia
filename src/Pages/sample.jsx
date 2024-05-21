@@ -5,7 +5,7 @@ import Footer from "../Components/Footer";
 import Map from "../Components/indiaMap";
 import BIRDS from 'vanta/dist/vanta.birds.min';
 
-export default function Sample(props) {
+export default function Sample() {
     const [vantaEffect, setVantaEffect] = useState(null);
     const vantaRef = useRef(null);
 

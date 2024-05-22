@@ -36,11 +36,11 @@ const Map = () => {
         <div ref={mapContainerRef} className="relative">
             <SVGMap
                 map={IndiaMap}
-                className="w-full h-auto india-map stroke-black stroke-1"
+                className="w-full h-auto stroke-black stroke-1"
                 onLocationClick={handleLocationClick}
                 customize={{
-                    India: {
-                        fill: "none",
+                    Bihar: {
+                        fill: "red",
                         stroke: "#000",
                         strokeWidth: 1
                     }

@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Navbar from "../Components/Navbar";
 import Sidebar from "../Components/Sidebar";
 import Footer from "../Components/Footer";
 import Map from "../Components/indiaMap";
 import BIRDS from 'vanta/dist/vanta.birds.min';
 import VanillaTilt from 'vanilla-tilt';
+import './sample.css';
 
 export default function Sample() {
     const [vantaEffect, setVantaEffect] = useState(null);
-    const vantaRef = useRef(null);
     const tiltRef = useRef(null);
+    const vantaRef = useRef(null);
 
     useEffect(() => {
         try {
@@ -47,10 +48,10 @@ export default function Sample() {
             <div className="min-h-screen flex flex-col bg-gradient-animated bg-[length:400%_400%] animate-gradient-animate relative overflow-hidden">
                 <div ref={vantaRef} className="absolute inset-0 z-0"></div>
                 <Navbar />
-                <div className="flex flex-1 justify-center items-start mt-2">
+                <div className="flex flex-1 justify-end items-start mt-2 mr-4">
                     <Sidebar />
-                    <div className="w-full max-w-[800px] relative">
-                        <div ref={tiltRef} className="tilt-div w-full h-[600px]">
+                    <div className="w-full max-w-[800px] relative ">
+                        <div className="tilt-div w-full h-[600px]">
                             <Map />
                         </div>
                     </div>

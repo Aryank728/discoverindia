@@ -6,17 +6,20 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-animated': 'linear-gradient(45deg, #282c34, #1e90ff, #ff6347)',
+      colors: {
+        customGradientStart: '#3BBCD9',
+        customGradientEnd: '#1e90ff', // example second color
       },
+      backgroundImage: theme => ({
+        'gradient-animated': `linear-gradient(90deg, #3BBCD9, #1e90ff, #ff6347, #3BBCD9)`,
+      }),
       animation: {
-        'gradient-animate': 'gradient 15s ease infinite',
+        'gradient-animate': 'gradientBG 15s ease infinite',
       },
       keyframes: {
-        gradient: {
-          '0%': { 'background-position': '0% 50%' },
-          '50%': { 'background-position': '100% 50%' },
-          '100%': { 'background-position': '0% 50%' },
+        gradientBG: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
         },
       },
     },

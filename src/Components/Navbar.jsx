@@ -15,7 +15,7 @@ const Navbar = () => {
                 <div className="lg:w-full w-11/12 mx-auto h-full flex justify-between items-center">
                     <div className="flex flex-col gap-y-4 lg:w-1/3">
                         <span className="flex items-center gap-x-2 font-bold text-2xl">
-                            <a href="/" className="font-popoppins text-3xl font-bold text-[#ce8a5c]">राज्य</a>
+                            <a href="/" className="font-popoppins text-3xl font-bold text-[#ce8a5c]">Tour India</a>
                         </span>
                     </div>
                     <ul className="flex-1 flex justify-center items-center gap-16 max-lg:hidden text-yellow-500">
@@ -24,7 +24,7 @@ const Navbar = () => {
                         <a href="/chhota4dham" className="leading-normal text-lg no-underline text-white">Chhota 4Dham</a>
                         <a href="/bada4dham" className="leading-normal text-lg no-underline text-white">Bada 4Dham</a>
                     </ul>
-                    <div onClick={showDropdown} className="lg:button text-[22px] cursor-pointer text-black">
+                    <div onClick={showDropdown} className="lg:hidden text-[22px] cursor-pointer text-black">
                         {dropdown ? <MdClose /> : <HiMenuAlt3 />}
                     </div>
                 </div>

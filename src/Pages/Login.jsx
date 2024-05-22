@@ -3,7 +3,8 @@ import { getDatabase, ref, get } from 'firebase/database';
 import { app } from '../firebase';
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { Tilt } from 'react-tilt'
+import { Tilt } from 'react-tilt';
+import { useAuth } from '../Context/AuthContext';
 
 const db = getDatabase(app);
 const auth = getAuth(app);
@@ -15,6 +16,7 @@ function LoginForm() {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const navigate = useNavigate();
+    const { currentUser } = useAuth();
 
     const checkUserInDatabase = async (email) => {
         const userRef = ref(db, 'users');
@@ -37,7 +39,7 @@ function LoginForm() {
             }
 
             await signInWithEmailAndPassword(auth, email, password);
-            navigate('/hi');
+            navigate('/');
         } catch (error) {
             if (error.code === 'auth/user-not-found') {
                 setEmailError('User not found.');
@@ -59,7 +61,7 @@ function LoginForm() {
                 await auth.signOut();
                 return;
             }
-            navigate('/hi');
+            navigate('/');
         } catch (error) {
             console.log('Google sign-in error:', error);
         }

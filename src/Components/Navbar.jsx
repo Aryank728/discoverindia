@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-use-history';
 import { HiMenuAlt3 } from "react-icons/hi";
@@ -6,6 +7,7 @@ import logo from "../asset/DOC-20240518-WA0004.png"; // Ensure this path is corr
 
 const Navbar = () => {
     const [dropdown, setDropdown] = useState(false);
+    const [showLoginPopup, setShowLoginPopup] = useState(false); // New state for showing login pop-up
     const { currentUser, logout } = useAuth();
     const history = useHistory();
 
@@ -21,9 +23,17 @@ const Navbar = () => {
         }
     };
 
+    const handleAddNewClick = () => {
+        if (!currentUser) {
+            setShowLoginPopup(true); // Show the login pop-up if user is not logged in
+        } else {
+            history.push('/placeform');
+        }
+    };
+
     return (
-        <nav className="w-full h-24 flex flex-col justify-center items-center bg-transparent sticky top-0 z-20">
-            <div className="container mx-auto lg:px-6">
+        <nav className="w-full h-24 flex flex-col justify-center items-center bg-transparent sticky z-20">
+            <div className="container">
                 <div className="lg:w-full w-11/12 mx-auto h-full flex justify-between items-center">
                     <div className="flex flex-col gap-y-4 w-full lg:w-1/3">
                         <span className="flex justify-center lg:justify-start gap-x-2 font-bold text-2xl w-full">
@@ -39,6 +49,7 @@ const Navbar = () => {
                         <a href="/constitution" className="leading-normal text-lg no-underline text-white">Constitution</a>
                         <a href="/about" className="leading-normal text-lg no-underline text-white">About Us</a>
                         <a href="/contact" className="leading-normal text-lg no-underline text-white">Contact Us</a>
+                        <a onClick={handleAddNewClick} className="leading-normal text-lg no-underline text-white cursor-pointer">Add New</a>
                         <button
                             onClick={handleAuthClick}
                             className="leading-normal text-lg no-underline text-white bg-[#F2B705] px-4 py-2 rounded"
@@ -56,6 +67,7 @@ const Navbar = () => {
                                 <a href="/constitution" className="leading-normal text-lg no-underline text-white">Constitution</a>
                                 <a href="/about" className="leading-normal text-lg no-underline text-white">About Us</a>
                                 <a href="/contact" className="leading-normal text-lg no-underline text-white">Contact Us</a>
+                                <a onClick={handleAddNewClick} className="leading-normal text-lg no-underline text-white cursor-pointer">Add New</a>
                                 <button
                                     onClick={handleAuthClick}
                                     className="leading-normal text-lg no-underline text-white bg-[#F2B705] px-4 py-2 rounded"
@@ -67,6 +79,15 @@ const Navbar = () => {
                     </div>
                 )}
             </div>
+            {/* Login pop-up */}
+            {showLoginPopup && (
+                <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+                        <h3 className="text-2xl font-semibold text-blue-500">Please login to add a new place</h3>
+                        <button onClick={() => setShowLoginPopup(false)} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Close</button>
+                    </div>
+                </div>
+            )}
         </nav>
     );
 };

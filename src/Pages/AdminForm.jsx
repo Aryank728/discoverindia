@@ -50,14 +50,12 @@ function AdminForm() {
     const [capital, setCapital] = useState('');
     const [stateImage, setStateImage] = useState(null);
     const [stateDescription, setStateDescription] = useState('');
-    const [famousPlace, setFamousPlace] = useState('');
-    const [placeImage, setPlaceImage] = useState(null);
-    const [placeDescription, setPlaceDescription] = useState('');
     const [formationDate, setFormationDate] = useState('');
     const [governor, setGovernor] = useState('');
     const [population, setPopulation] = useState('');
     const [chiefMinister, setChiefMinister] = useState('');
     const [showModal, setShowModal] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
 
     const uploadImage = async (imageFile, folder) => {
@@ -73,10 +71,6 @@ function AdminForm() {
         setStateImage(e.target.files[0]);
     };
 
-    const handlePlaceImageChange = (e) => {
-        setPlaceImage(e.target.files[0]);
-    };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -87,33 +81,33 @@ function AdminForm() {
                 console.error('Invalid formation date');
                 return;
             }
+            setIsSubmitting(true);
 
             const stateImagePath = await uploadImage(stateImage, 'stateimage');
-            const placeImagePath = await uploadImage(placeImage, 'placeimage');
 
             await addDoc(collection(Firestore, 'states'), {
                 state,
                 capital,
                 stateDescription,
-                famousPlace,
-                placeDescription,
                 formationDate: Timestamp.fromDate(formationDateObj),
                 governor,
                 population: parseInt(population),
                 chiefMinister,
                 stateImagePath,
-                placeImagePath,
             });
+            setIsSubmitting(true);
             console.log('Document added successfully');
             clearForm();
             setShowModal(true);
             setTimeout(() => {
                 setShowModal(false);
-                clearForm();  // <--- Clear form after successful submission
+                clearForm();
                 navigate('/');
             }, 3000);
         } catch (error) {
             console.error('Error adding document: ', error);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -122,30 +116,26 @@ function AdminForm() {
         setCapital('');
         setStateImage(null);
         setStateDescription('');
-        setFamousPlace('');
-        setPlaceImage(null);
-        setPlaceDescription('');
         setFormationDate('');
         setGovernor('');
         setPopulation('');
         setChiefMinister('');
         document.getElementById('stateImage').value = ''; // <--- Reset file input
-        document.getElementById('placeImage').value = ''; // <--- Reset file input
     };
 
     return (
-        <div className="flex justify-center items-center h-screen">
-            <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-lg">
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <h2 className="text-2xl font-semibold text-center">State Form</h2>
+        <div className="container mx-auto mt-8">
+            <div className="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+                <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <h2 className="col-span-1 md:col-span-2 text-3xl font-bold text-center text-blue-600">State Form</h2>
                     <div>
-                        <label htmlFor="state" className="block text-sm font-medium text-gray-700 text-left">State:</label>
+                        <label htmlFor="state" className="block text-sm font-semibold text-gray-700">State:</label>
                         <select
                             id="state"
                             onChange={(e) => setState(e.target.value)}
                             value={state}
                             required
-                            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         >
                             <option value="">Select State</option>
                             {indianStates.map((stateName, index) => (
@@ -154,7 +144,7 @@ function AdminForm() {
                         </select>
                     </div>
                     <div>
-                        <label htmlFor="capital" className="block text-sm font-medium text-gray-700 text-left">Capital:</label>
+                        <label htmlFor="capital" className="block text-sm font-semibold text-gray-700">Capital:</label>
                         <input
                             id="capital"
                             onChange={(e) => setCapital(e.target.value)}
@@ -162,22 +152,22 @@ function AdminForm() {
                             type="text"
                             required
                             placeholder="Enter Capital"
-                            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor="stateImage" className="block text-sm font-medium text-gray-700 text-left">State Image:</label>
+                        <label htmlFor="stateImage" className="block text-sm font-semibold text-gray-700">State Image:</label>
                         <input
                             id="stateImage"
                             onChange={handleStateImageChange}
                             type="file"
                             accept="image/*"
                             required
-                            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor="stateDescription" className="block text-sm font-medium text-gray-700 text-left">State Description:</label>
+                        <label htmlFor="stateDescription" className="block text-sm font-semibold text-gray-700">State Description:</label>
                         <textarea
                             id="stateDescription"
                             onChange={(e) => setStateDescription(e.target.value)}
@@ -185,81 +175,48 @@ function AdminForm() {
                             rows="4"
                             required
                             placeholder="Enter State Description"
-                            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
+
+
+
                     <div>
-                        <label htmlFor="famousPlace" className="block text-sm font-medium text-gray-700 text-left">Famous Place:</label>
-                        <input
-                            id="famousPlace"
-                            onChange={(e) => setFamousPlace(e.target.value)}
-                            value={famousPlace}
-                            type="text"
-                            required
-                            placeholder="Enter Famous Place"
-                            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="placeImage" className="block text-sm font-medium text-gray-700 text-left">Place Image:</label>
-                        <input
-                            id="placeImage"
-                            onChange={handlePlaceImageChange}
-                            type="file"
-                            accept="image/*"
-                            required
-                            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="placeDescription" className="block text-sm font-medium text-gray-700 text-left">Place Description:</label>
-                        <textarea
-                            id="placeDescription"
-                            onChange={(e) => setPlaceDescription(e.target.value)}
-                            value={placeDescription}
-                            rows="4"
-                            required
-                            placeholder="Enter Place Description"
-                            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="formationDate" className="block text-sm font-medium text-gray-700 text-left">Formation Date:</label>
+                        <label htmlFor="formationDate" className="block text-sm font-semibold text-gray-700">Formation Date:</label>
                         <input
                             id="formationDate"
                             onChange={(e) => setFormationDate(e.target.value)}
                             value={formationDate}
                             type="date"
                             required
-                            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor="governor" className="block text-sm font-medium text-gray-700 text-left">State Governor:</label>
+                        <label htmlFor="governor" className="block text-sm font-semibold text-gray-700">Governor:</label>
                         <input
                             id="governor"
                             onChange={(e) => setGovernor(e.target.value)}
                             value={governor}
                             type="text"
                             required
-                            placeholder="Enter State Governor"
-                            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Enter Governor"
+                            className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor="population" className="block text-sm font-medium text-gray-700 text-left">State Population:</label>
+                        <label htmlFor="population" className="block text-sm font-semibold text-gray-700">Population:</label>
                         <input
                             id="population"
                             onChange={(e) => setPopulation(e.target.value)}
                             value={population}
                             type="number"
                             required
-                            placeholder="Enter State Population"
-                            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                        />
+                            placeholder="Enter Population"
+                            className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" />
                     </div>
                     <div>
-                        <label htmlFor="chiefMinister" className="block text-sm font-medium text-gray-700 text-left">Chief Minister:</label>
+                        <label htmlFor="chiefMinister" className="block text-sm font-semibold text-gray-700">Chief Minister:</label>
                         <input
                             id="chiefMinister"
                             onChange={(e) => setChiefMinister(e.target.value)}
@@ -267,21 +224,25 @@ function AdminForm() {
                             type="text"
                             required
                             placeholder="Enter Chief Minister"
-                            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
-                    <button type="submit" className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300">
-                        Submit
+                    <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className={`col-span-1 md:col-span-2 w-full py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-opacity ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                        {isSubmitting ? 'Submitting...' : 'Submit'}
                     </button>
                 </form>
-            </div>
-            {showModal && (
-                <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center">
-                    <div className="bg-white p-4 rounded-lg shadow-lg">
-                        <p className="text-lg font-semibold">Form submitted successfully!</p>
+                {showModal && (
+                    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+                        <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+                            <h3 className="text-2xl font-semibold text-blue-500">Data Added Successfully</h3>
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 }

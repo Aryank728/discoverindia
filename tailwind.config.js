@@ -6,7 +6,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        montserrat: ['Montserrat', 'sans-serif'],
+        roboto: ['Roboto', 'sans-serif'],
+      },
       colors: {
+        headerColor: '#3BBCD9',
+        bodyColor: '#BF9075',
         customGradientStart: '#3BBCD9',
         customGradientEnd: '#1e90ff', // example second color
       },

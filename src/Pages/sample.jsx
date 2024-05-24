@@ -5,6 +5,7 @@ import Map from "../Components/indiaMap";
 import SlideShow from "../Components/Slides";
 import BIRDS from 'vanta/dist/vanta.birds.min';
 import VanillaTilt from 'vanilla-tilt';
+import map from "../asset/map.jpg";
 import './sample.css';
 
 export default function Sample() {
@@ -94,6 +95,7 @@ export default function Sample() {
             <h3 className="font-poppins text-3xl font-bold mb-4 ml-6 text-left">What is Union Territory</h3>
             <p className='font-arial text-lg ml-6 mb-4'>A Union Territory is an administrative division that is directly controlled by the Central Government. Union Territories are ruled directly by the Central Government and have a Lieutenant Governor as an administrator, who is the representative of the President of India and appointed by the Central government.
             </p>
+            <img src={map} alt="India Map" className='w-[70%] h-[1%] position-relative m-auto mb-6' />
             <Footer />
         </>
     );

@@ -4,6 +4,7 @@ import Sample from './Pages/sample';
 import SignupForm from './Pages/Signup';
 import LoginForm from './Pages/Login';
 import AdminForm from './Pages/AdminForm';
+import Fetch from "./Context/fetch";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Sample />} />
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/adminform" element={<AdminForm />} />
+          <Route path="/fetch" element={<Fetch />} />
         </Routes>
       </div>
     </Router>

@@ -13,7 +13,8 @@ const Map = () => {
         const stateName = event.target.attributes.name?.value;
         if (stateName) {
             setSelectedState(stateName);
-            history.push(`/state/${encodeURIComponent(stateName)}`);
+            const formattedStateName = stateName.toLowerCase().replace(/\s+/g, '');
+            history.push(`/state/${encodeURIComponent(formattedStateName)}`);
         } else {
             console.error('State name is undefined or not found');
         }

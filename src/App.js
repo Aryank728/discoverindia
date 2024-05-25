@@ -6,6 +6,7 @@ import LoginForm from './Pages/Login';
 import AdminForm from './Pages/AdminForm';
 import Fetch from "./Context/fetch";
 import PalaceForm from './Pages/PalaceForm';
+import Constitution from './Pages/Constitution';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginForm />} />
           <Route path="/" element={<Sample />} />
+          <Route path="/constitution" element={<Constitution />} />
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/stateform" element={<AdminForm />} />
           <Route path="/fetch" element={<Fetch />} />

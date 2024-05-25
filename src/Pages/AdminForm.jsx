@@ -91,7 +91,7 @@ function AdminForm() {
                 stateDescription,
                 formationDate: Timestamp.fromDate(formationDateObj),
                 governor,
-                population: parseInt(population),
+                population,
                 chiefMinister,
                 stateImagePath,
             });
@@ -208,7 +208,7 @@ function AdminForm() {
                             id="population"
                             onChange={(e) => setPopulation(e.target.value)}
                             value={population}
-                            type="number"
+                            type="text"
                             required
                             placeholder="Enter Population"
                             className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500" />

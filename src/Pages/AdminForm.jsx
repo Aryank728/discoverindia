@@ -85,7 +85,7 @@ function AdminForm() {
 
             const stateImagePath = await uploadImage(stateImage, 'stateimage');
 
-            await addDoc(collection(Firestore, 'states'), {
+            await addDoc(collection(Firestore, state.toLowerCase().replace(/\s+/g, '')), {
                 state,
                 capital,
                 stateDescription,
@@ -95,13 +95,11 @@ function AdminForm() {
                 chiefMinister,
                 stateImagePath,
             });
-            setIsSubmitting(true);
             console.log('Document added successfully');
             clearForm();
             setShowModal(true);
             setTimeout(() => {
                 setShowModal(false);
-                clearForm();
                 navigate('/');
             }, 3000);
         } catch (error) {
@@ -238,7 +236,8 @@ function AdminForm() {
                 {showModal && (
                     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
                         <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-                            <h3 className="text-2xl font-semibold text-blue-500">Data Added Successfully</h3>
+                            <h3 className="text-2xl font-semibold text-blue-600">State Added Successfully!</h3>
+                            <p className="mt-4 text-gray-700">The state has been added to the database.</p>
                         </div>
                     </div>
                 )}

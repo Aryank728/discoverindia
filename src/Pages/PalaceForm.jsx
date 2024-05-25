@@ -69,18 +69,13 @@ function PalaceForm() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (!placeImage) {
-            alert('Please select an image');
-            return;
-        }
-
-        setIsSubmitting(true);
 
         try {
-            const placeImagePath = await uploadImage(placeImage, 'placeImage');
+            setIsSubmitting(true);
 
-            await addDoc(collection(Firestore, 'place'), {
-                state,
+            const placeImagePath = await uploadImage(placeImage, 'placeimage');
+
+            await addDoc(collection(Firestore, state.toLowerCase().replace(/\s+/g, '')), {
                 placeDescription,
                 placeImagePath,
             });
@@ -102,14 +97,11 @@ function PalaceForm() {
         setState('');
         setPlaceImage(null);
         setPlaceDescription('');
-        if (document.getElementById('placeImage')) {
-            document.getElementById('placeImage').value = ''; // <--- Reset file input
-        }
+        document.getElementById('placeImage').value = ''; // <--- Reset file input
     };
 
     return (
         <div className="container mx-auto mt-8">
-            <Navbar />
             <div className="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg">
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <h2 className="col-span-1 md:col-span-2 text-3xl font-bold text-center text-blue-600">Place Form</h2>
@@ -139,7 +131,7 @@ function PalaceForm() {
                             className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
-                    <div>
+                    <div className="col-span-1 md:col-span-2">
                         <label htmlFor="placeDescription" className="block text-sm font-semibold text-gray-700">Place Description:</label>
                         <textarea
                             id="placeDescription"
@@ -151,11 +143,10 @@ function PalaceForm() {
                             className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
-
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className={`col-span-1 md:col-span-2 w-full py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        className={`col-span-1 md:col-span-2 w-full py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-opacity ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         {isSubmitting ? 'Submitting...' : 'Submit'}
                     </button>
@@ -163,7 +154,8 @@ function PalaceForm() {
                 {showModal && (
                     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
                         <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-                            <h3 className="text-2xl font-semibold text-blue-500">Data Added Successfully</h3>
+                            <h3 className="text-2xl font-semibold text-blue-600">Place Added Successfully!</h3>
+                            <p className="mt-4 text-gray-700">The place has been added to the database.</p>
                         </div>
                     </div>
                 )}

@@ -100,7 +100,6 @@ function AdminForm() {
             setShowModal(true);
             setTimeout(() => {
                 setShowModal(false);
-                navigate('/');
             }, 3000);
         } catch (error) {
             console.error('Error adding document: ', error);
@@ -233,6 +232,12 @@ function AdminForm() {
                         {isSubmitting ? 'Submitting...' : 'Submit'}
                     </button>
                 </form>
+                <button
+                    onClick={() => navigate(-1)}
+                    className="mt-4 w-full py-3 bg-gray-500 text-white font-bold rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                >
+                    Back
+                </button>
                 {showModal && (
                     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
                         <div className="bg-white p-6 rounded-lg shadow-lg text-center">

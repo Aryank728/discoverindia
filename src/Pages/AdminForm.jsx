@@ -83,7 +83,7 @@ function AdminForm() {
             }
             setIsSubmitting(true);
 
-            const stateDocRef = doc(Firestore, state.toLowerCase().replace(/\s+/g, ''));
+            const stateDocRef = doc(Firestore, 'states', state.toLowerCase().replace(/\s+/g, ''));
             const stateDoc = await getDoc(stateDocRef);
 
             let stateImagePath = '';
@@ -110,7 +110,7 @@ function AdminForm() {
                 await setDoc(stateDocRef, stateData);
                 console.log('Document updated successfully');
             } else {
-                await addDoc(collection(Firestore, state.toLowerCase().replace(/\s+/g, '')), stateData);
+                await setDoc(stateDocRef, stateData);
                 console.log('Document added successfully');
             }
 
@@ -177,7 +177,6 @@ function AdminForm() {
                             onChange={handleStateImageChange}
                             type="file"
                             accept="image/*"
-                            required
                             className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
@@ -193,9 +192,6 @@ function AdminForm() {
                             className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
-
-
-
                     <div>
                         <label htmlFor="formationDate" className="block text-sm font-semibold text-gray-700">Formation Date:</label>
                         <input

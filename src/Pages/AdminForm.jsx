@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { collection, addDoc, Timestamp, getFirestore } from 'firebase/firestore';
+import { collection, addDoc, doc, setDoc, Timestamp, getFirestore, getDoc } from 'firebase/firestore';
 import { ref, uploadBytes } from 'firebase/storage';
 import { app, image } from '../firebase'; // Adjust the import according to your setup
 import { useNavigate } from 'react-router-dom';
@@ -83,9 +83,16 @@ function AdminForm() {
             }
             setIsSubmitting(true);
 
-            const stateImagePath = await uploadImage(stateImage, 'stateimage');
+            const stateDocRef = doc(Firestore, state.toLowerCase().replace(/\s+/g, ''));
+            const stateDoc = await getDoc(stateDocRef);
 
-            await addDoc(collection(Firestore, state.toLowerCase().replace(/\s+/g, '')), {
+            let stateImagePath = '';
+
+            if (stateImage) {
+                stateImagePath = await uploadImage(stateImage, 'stateimage');
+            }
+
+            const stateData = {
                 state,
                 capital,
                 stateDescription,
@@ -93,16 +100,27 @@ function AdminForm() {
                 governor,
                 population,
                 chiefMinister,
-                stateImagePath,
-            });
-            console.log('Document added successfully');
+            };
+
+            if (stateImagePath) {
+                stateData.stateImagePath = stateImagePath;
+            }
+
+            if (stateDoc.exists()) {
+                await setDoc(stateDocRef, stateData);
+                console.log('Document updated successfully');
+            } else {
+                await addDoc(collection(Firestore, state.toLowerCase().replace(/\s+/g, '')), stateData);
+                console.log('Document added successfully');
+            }
+
             clearForm();
             setShowModal(true);
             setTimeout(() => {
                 setShowModal(false);
             }, 3000);
         } catch (error) {
-            console.error('Error adding document: ', error);
+            console.error('Error adding or updating document: ', error);
         } finally {
             setIsSubmitting(false);
         }

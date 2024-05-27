@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getDatabase, ref, set, update, onValue, increment } from 'firebase/database';
 import { app } from '../firebase';
-import { getAuth, createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import bcrypt from 'bcryptjs';
 import { useNavigate } from 'react-router-dom';
 
@@ -82,6 +82,38 @@ function SignupForm() {
         }
     };
 
+    const handleGoogleSignup = async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+
+            // Save user data to the database
+            const newUserRef = ref(db, `users/${user.uid}`);
+            await set(newUserRef, {
+                id: user.uid,
+                name: user.displayName,
+                email: user.email,
+            });
+
+            const userCounterRef = ref(db, 'userCounter');
+            await update(userCounterRef, {
+                value: increment(1),
+            });
+
+            setShowModal(true);
+
+            // Hide the modal after 2 seconds and navigate to login page
+            setTimeout(() => {
+                setShowModal(false);
+                navigate('/login');
+            }, 2000);
+        } catch (error) {
+            console.error('Error signing in with Google: ', error);
+            alert('Error signing in with Google. Please try again.');
+        }
+    };
+
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-lg">
@@ -129,6 +161,12 @@ function SignupForm() {
                         Signup
                     </button>
                 </form>
+                <button
+                    onClick={handleGoogleSignup}
+                    className="w-full mt-4 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 transition-colors duration-300"
+                >
+                    Sign up with Google
+                </button>
                 {showModal && (
                     <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
                         <div className="bg-white p-6 rounded-lg shadow-lg">

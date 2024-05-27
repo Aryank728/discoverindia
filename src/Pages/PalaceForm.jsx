@@ -3,47 +3,19 @@ import { collection, addDoc, getFirestore } from 'firebase/firestore';
 import { ref, uploadBytes } from 'firebase/storage';
 import { app, image } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import { getAuth } from 'firebase/auth';
 
 const indianStates = [
-    'Andaman and Nicobar Islands',
-    'Andhra Pradesh',
-    'Arunachal Pradesh',
-    'Assam',
-    'Bihar',
-    'Chandigarh',
-    'Chhattisgarh',
-    'Dadra and Nagar Haveli and Daman and Diu',
-    'Delhi',
-    'Goa',
-    'Gujarat',
-    'Haryana',
-    'Himachal Pradesh',
-    'Jammu and Kashmir',
-    'Jharkhand',
-    'Karnataka',
-    'Kerala',
-    'Ladakh',
-    'Lakshadweep',
-    'Madhya Pradesh',
-    'Maharashtra',
-    'Manipur',
-    'Meghalaya',
-    'Mizoram',
-    'Nagaland',
-    'Odisha',
-    'Puducherry',
-    'Punjab',
-    'Rajasthan',
-    'Sikkim',
-    'Tamil Nadu',
-    'Telangana',
-    'Tripura',
-    'Uttar Pradesh',
-    'Uttarakhand',
-    'West Bengal'
+    'Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar',
+    'Chandigarh', 'Chhattisgarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Delhi', 'Goa',
+    'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Jharkhand', 'Karnataka',
+    'Kerala', 'Ladakh', 'Lakshadweep', 'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya',
+    'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu',
+    'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'
 ];
 
 const Firestore = getFirestore(app);
+const auth = getAuth(app);
 
 function PalaceForm() {
     const [state, setState] = useState('');
@@ -72,15 +44,30 @@ function PalaceForm() {
 
         try {
             setIsSubmitting(true);
+            const currentUser = auth.currentUser;
+            const userEmail = currentUser.email;
+            const userName = currentUser.displayName;
 
             const placeImagePath = await uploadImage(placeImage, 'placeimage');
 
-            await addDoc(collection(Firestore, state.toLowerCase().replace(/\s+/g, '')), {
-                placeName,
-                placeDescription,
-                placeImagePath,
-            });
-            console.log('Document added successfully');
+            if (userEmail === 'kumararyan1929@gmail.com') {
+                await addDoc(collection(Firestore, state.toLowerCase().replace(/\s+/g, '')), {
+                    placeName,
+                    placeDescription,
+                    placeImagePath,
+                });
+                console.log('Document added successfully to state collection');
+            } else {
+                await addDoc(collection(Firestore, 'review'), {
+                    placeName,
+                    placeDescription,
+                    placeImagePath,
+                    userName,
+                    userEmail
+                });
+                console.log('Document added successfully to review collection');
+            }
+
             clearForm();
             setShowModal(true);
             setTimeout(() => {
@@ -103,7 +90,6 @@ function PalaceForm() {
 
     return (
         <div className="container mx-auto mt-8">
-
             <div className="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg">
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <h2 className="col-span-1 md:col-span-2 text-3xl font-bold text-center text-blue-600">Place Form</h2>

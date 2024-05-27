@@ -4,19 +4,20 @@ import { app } from '../firebase';
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { Tilt } from 'react-tilt';
-import { useAuth } from '../Context/AuthContext';
+// import { useAuth } from '../Context/AuthContext';
 
 const db = getDatabase(app);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
+const AUTHORIZED_EMAIL = 'kumararyan1929@gmail.com';
+
 function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [emailError, setEmailError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
+    const [authError, setAuthError] = useState('');
     const navigate = useNavigate();
-    const { currentUser } = useAuth();
+    // const { currentUser } = useAuth();
 
     const checkUserInDatabase = async (email) => {
         const userRef = ref(db, 'users');
@@ -28,23 +29,30 @@ function LoginForm() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setAuthError('');
 
         try {
             if (email.endsWith('@gmail.com')) {
                 const isUserPresent = await checkUserInDatabase(email);
                 if (!isUserPresent) {
-                    setEmailError('Gmail user not found in the database.');
+                    setAuthError('Invalid credentials.');
                     return;
                 }
             }
 
-            await signInWithEmailAndPassword(auth, email, password);
-            navigate('/');
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const loggedInEmail = userCredential.user.email;
+
+            if (loggedInEmail !== AUTHORIZED_EMAIL) {
+                setAuthError('You are not authorized to access this application.');
+                await auth.signOut();
+                return;
+            }
+
+            navigate('/dashboard');
         } catch (error) {
-            if (error.code === 'auth/user-not-found') {
-                setEmailError('User not found.');
-            } else if (error.code === 'auth/wrong-password') {
-                setPasswordError('Incorrect password.');
+            if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                setAuthError('Invalid credentials.');
             } else {
                 alert(error.message);
             }
@@ -55,13 +63,21 @@ function LoginForm() {
         try {
             const result = await signInWithPopup(auth, googleProvider);
             const email = result.user.email;
+
             const isUserPresent = await checkUserInDatabase(email);
             if (!isUserPresent) {
-                setEmailError('Gmail user not found in the database.');
+                setAuthError('Invalid credentials.');
                 await auth.signOut();
                 return;
             }
-            navigate('/');
+
+            if (email !== AUTHORIZED_EMAIL) {
+                setAuthError('You are not authorized to access this application.');
+                await auth.signOut();
+                return;
+            }
+
+            navigate('/dashboard');
         } catch (error) {
             console.log('Google sign-in error:', error);
         }
@@ -88,7 +104,6 @@ function LoginForm() {
                                 placeholder="Enter Your Email"
                                 className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                             />
-                            {emailError && <p className="text-red-500 text-xs italic mt-1">{emailError}</p>}
                         </div>
                         <div>
                             <label htmlFor="password" className="block text-sm font-medium text-gray-700 text-left">Password:</label>
@@ -101,8 +116,8 @@ function LoginForm() {
                                 placeholder="Enter Your Password"
                                 className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                             />
-                            {passwordError && <p className="text-red-500 text-xs italic mt-1">{passwordError}</p>}
                         </div>
+                        {authError && <p className="text-red-500 text-xs italic mt-1">{authError}</p>}
                         <button type="submit" className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300">
                             Login
                         </button>

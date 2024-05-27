@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { collection, addDoc, getFirestore } from 'firebase/firestore';
 import { ref, uploadBytes } from 'firebase/storage';
-import { app, image } from '../firebase'; // Adjust the import according to your setup
+import { app, image } from '../firebase';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../Components/Navbar';
 
 const indianStates = [
     'Andaman and Nicobar Islands',
@@ -86,7 +85,6 @@ function PalaceForm() {
             setShowModal(true);
             setTimeout(() => {
                 setShowModal(false);
-                navigate('/');
             }, 3000);
         } catch (error) {
             console.error('Error adding document: ', error);
@@ -105,6 +103,7 @@ function PalaceForm() {
 
     return (
         <div className="container mx-auto mt-8">
+
             <div className="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg">
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <h2 className="col-span-1 md:col-span-2 text-3xl font-bold text-center text-blue-600">Place Form</h2>
@@ -164,6 +163,12 @@ function PalaceForm() {
                         {isSubmitting ? 'Submitting...' : 'Submit'}
                     </button>
                 </form>
+                <button
+                    onClick={() => navigate(-1)}
+                    className="mt-4 w-full py-3 bg-gray-500 text-white font-bold rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                >
+                    Back
+                </button>
                 {showModal && (
                     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
                         <div className="bg-white p-6 rounded-lg shadow-lg text-center">

@@ -48,6 +48,7 @@ const Firestore = getFirestore(app);
 
 function PalaceForm() {
     const [state, setState] = useState('');
+    const [placeName, setPlaceName] = useState('');
     const [placeImage, setPlaceImage] = useState(null);
     const [placeDescription, setPlaceDescription] = useState('');
     const [showModal, setShowModal] = useState(false);
@@ -76,6 +77,7 @@ function PalaceForm() {
             const placeImagePath = await uploadImage(placeImage, 'placeimage');
 
             await addDoc(collection(Firestore, state.toLowerCase().replace(/\s+/g, '')), {
+                placeName,
                 placeDescription,
                 placeImagePath,
             });
@@ -95,6 +97,7 @@ function PalaceForm() {
 
     const clearForm = () => {
         setState('');
+        setPlaceName('');
         setPlaceImage(null);
         setPlaceDescription('');
         document.getElementById('placeImage').value = ''; // <--- Reset file input
@@ -119,6 +122,16 @@ function PalaceForm() {
                                 <option key={index} value={stateName}>{stateName}</option>
                             ))}
                         </select>
+                    </div>
+                    <div>
+                        <label htmlFor="placeName" className="block text-sm font-semibold text-gray-700">Place Name:</label>
+                        <input
+                            id="placeName"
+                            onChange={(e) => setPlaceName(e.target.value)}
+                            value={placeName}
+                            required
+                            className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                        />
                     </div>
                     <div>
                         <label htmlFor="placeImage" className="block text-sm font-semibold text-gray-700">Place Image:</label>

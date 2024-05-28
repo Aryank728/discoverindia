@@ -25,6 +25,7 @@ const AndhraPradesh = () => {
                         const convertedData = {
                             ...docData,
                             formationDate: docData.formationDate ? docData.formationDate.toDate().toDateString() : '',
+                            timestamp: docData.timestamp ? docData.timestamp.toDate() : new Date(0) // Fallback to epoch if timestamp is missing
                         };
 
                         fetchedData.push({ id: doc.id, ...convertedData });
@@ -56,6 +57,9 @@ const AndhraPradesh = () => {
                         acc[id][type] = url;
                         return acc;
                     }, {});
+
+                    // Sort the data by timestamp in descending order
+                    fetchedData.sort((a, b) => b.timestamp - a.timestamp);
 
                     setData(fetchedData);
                     setImageUrls(imageUrls);

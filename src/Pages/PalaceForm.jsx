@@ -53,6 +53,7 @@ function PalaceForm() {
             const placeImagePath = await uploadImage(placeImage, 'placeimage');
 
             const placeData = {
+                state, // Include state in placeData
                 placeName,
                 placeDescription,
                 placeImagePath,
@@ -195,3 +196,4 @@ function PalaceForm() {
 }
 
 export default PalaceForm;
+

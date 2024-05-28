@@ -4,9 +4,10 @@ import Sample from './Pages/sample';
 import SignupForm from './Pages/Signup';
 import LoginForm from './Pages/Login';
 import AdminForm from './Pages/AdminForm';
-import AndhraPradesh from './Pages/andhraPradesh';
+import AndhraPradesh from './Pages/state Pages/andhraPradesh';
 import PalaceForm from './Pages/PalaceForm';
 import Constitution from './Pages/Constitution';
+import Dashboard from "./Pages/dashBoard";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/constitution" element={<Constitution />} />
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/stateform" element={<AdminForm />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/state/andhrapradesh" element={<AndhraPradesh />} />
           <Route path="/placeform" element={<PalaceForm />} />
         </Routes>

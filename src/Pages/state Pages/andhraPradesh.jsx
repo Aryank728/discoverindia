@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/iframe-has-title */
 import React, { useState, useEffect } from 'react';
-import { db, image } from "../firebase";
+import { db, image } from "../../firebase";
 import { collection, getDocs } from 'firebase/firestore';
 import { getDownloadURL, ref as storageRef } from 'firebase/storage';
-import Navbar from "../Components/Navbar";
-import Footer from "../Components/Footer";
-import Sidebar from "../Components/Sidebar";
+import Navbar from "../../Components/Navbar";
+import Footer from "../../Components/Footer";
+import Sidebar from "../../Components/Sidebar";
 
 const AndhraPradesh = () => {
     const [data, setData] = useState([]);

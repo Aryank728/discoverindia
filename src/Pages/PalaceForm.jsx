@@ -4,6 +4,7 @@ import { ref, uploadBytes } from 'firebase/storage';
 import { app, image } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
+import * as dotenv from "dotenv";
 
 const indianStates = [
     'Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar',
@@ -13,6 +14,10 @@ const indianStates = [
     'Mizoram', 'Nagaland', 'Odisha', 'Puducherry', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu',
     'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'
 ];
+
+dotenv.config();
+
+const AUTHORIZED_EMAIL = process.env.AUTHORIZED_EMAIL;
 
 const Firestore = getFirestore(app);
 const auth = getAuth(app);
@@ -61,7 +66,7 @@ function PalaceForm() {
                 longitude
             };
 
-            if (userEmail === 'kumararyan1929@gmail.com') {
+            if (userEmail === AUTHORIZED_EMAIL) {
                 await addDoc(collection(Firestore, state.toLowerCase().replace(/\s+/g, '')), placeData);
                 console.log('Document added successfully to state collection');
             } else {

@@ -4,7 +4,6 @@ import { ref, uploadBytes } from 'firebase/storage';
 import { app, image } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { getAuth } from 'firebase/auth';
-import * as dotenv from "dotenv";
 
 const indianStates = [
     'Andaman and Nicobar Islands', 'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar',
@@ -15,9 +14,7 @@ const indianStates = [
     'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'
 ];
 
-dotenv.config();
-
-const AUTHORIZED_EMAIL = process.env.AUTHORIZED_EMAIL;
+const AUTHORIZED_EMAIL = "kumararyan1929@gmail.com";
 
 const Firestore = getFirestore(app);
 const auth = getAuth(app);

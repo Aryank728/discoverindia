@@ -4,15 +4,13 @@ import { app } from '../firebase';
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { Tilt } from 'react-tilt';
-import * as dotenv from 'dotenv';
 // import { useAuth } from '../Context/AuthContext';
 
-dotenv.config();
 const db = getDatabase(app);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
-const AUTHORIZED_EMAIL = process.env.AUTHORIZED_EMAIL;
+const AUTHORIZED_EMAIL = "kumararyan1929@gmail.com";
 
 function LoginForm() {
     const [email, setEmail] = useState('');

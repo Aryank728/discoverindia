@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/iframe-has-title */
 import React, { useState, useEffect } from 'react';
 import { db, image } from "../firebase";
 import { collection, getDocs } from 'firebase/firestore';
@@ -81,7 +82,7 @@ const AndhraPradesh = () => {
                     const stateImage = imageUrls[item.id]?.stateImage || "";
 
                     return (
-                        <div key={item.id}>
+                        <div key={item.id} className="mb-8">
                             {/* Check if population field is present */}
                             {item.hasOwnProperty('population') && (
                                 <Sidebar
@@ -96,6 +97,19 @@ const AndhraPradesh = () => {
                             {imageUrls[item.id]?.placeImage && (
                                 <div>
                                     <img src={imageUrls[item.id].placeImage} alt="Place" />
+                                </div>
+                            )}
+                            {item.latitude && item.longitude && (
+                                <div className="mt-4">
+                                    <iframe
+                                        src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1000!2d${item.longitude}!3d${item.latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z${item.latitude},${item.longitude}!5e0!3m2!1sen!2sin!4v1716888936335!5m2!1sen!2sin`}
+                                        width="600"
+                                        height="450"
+                                        style={{ border: 0 }}
+                                        allowFullScreen=""
+                                        loading="lazy"
+                                        referrerPolicy="no-referrer-when-downgrade"
+                                    ></iframe>
                                 </div>
                             )}
                             <div>

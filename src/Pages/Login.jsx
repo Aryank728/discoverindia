@@ -43,13 +43,12 @@ function LoginForm() {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const loggedInEmail = userCredential.user.email;
 
-            if (loggedInEmail !== AUTHORIZED_EMAIL) {
-                setAuthError('You are not authorized to access this application.');
-                await auth.signOut();
-                return;
+            if (loggedInEmail === AUTHORIZED_EMAIL) {
+                navigate('/dashboard');
+            } if (loggedInEmail !== AUTHORIZED_EMAIL) {
+                navigate('/');
             }
 
-            navigate('/dashboard');
         } catch (error) {
             if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
                 setAuthError('Invalid credentials.');
@@ -71,13 +70,13 @@ function LoginForm() {
                 return;
             }
 
+            if (email === AUTHORIZED_EMAIL) {
+                navigate('/dashboard');
+            }
             if (email !== AUTHORIZED_EMAIL) {
-                setAuthError('You are not authorized to access this application.');
-                await auth.signOut();
-                return;
+                navigate('/');
             }
 
-            navigate('/dashboard');
         } catch (error) {
             console.log('Google sign-in error:', error);
         }

@@ -22,6 +22,8 @@ function PalaceForm() {
     const [placeName, setPlaceName] = useState('');
     const [placeImage, setPlaceImage] = useState(null);
     const [placeDescription, setPlaceDescription] = useState('');
+    const [latitude, setLatitude] = useState('');
+    const [longitude, setLongitude] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
@@ -50,21 +52,21 @@ function PalaceForm() {
 
             const placeImagePath = await uploadImage(placeImage, 'placeimage');
 
+            const placeData = {
+                placeName,
+                placeDescription,
+                placeImagePath,
+                latitude,
+                longitude
+            };
+
             if (userEmail === 'kumararyan1929@gmail.com') {
-                await addDoc(collection(Firestore, state.toLowerCase().replace(/\s+/g, '')), {
-                    placeName,
-                    placeDescription,
-                    placeImagePath,
-                });
+                await addDoc(collection(Firestore, state.toLowerCase().replace(/\s+/g, '')), placeData);
                 console.log('Document added successfully to state collection');
             } else {
-                await addDoc(collection(Firestore, 'review'), {
-                    placeName,
-                    placeDescription,
-                    placeImagePath,
-                    userName,
-                    userEmail
-                });
+                placeData.userName = userName;
+                placeData.userEmail = userEmail;
+                await addDoc(collection(Firestore, 'review'), placeData);
                 console.log('Document added successfully to review collection');
             }
 
@@ -85,6 +87,8 @@ function PalaceForm() {
         setPlaceName('');
         setPlaceImage(null);
         setPlaceDescription('');
+        setLatitude('');
+        setLongitude('');
         document.getElementById('placeImage').value = ''; // <--- Reset file input
     };
 
@@ -126,6 +130,28 @@ function PalaceForm() {
                             type="file"
                             accept="image/*"
                             required
+                            className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="latitude" className="block text-sm font-semibold text-gray-700">Latitude:</label>
+                        <input
+                            id="latitude"
+                            onChange={(e) => setLatitude(e.target.value)}
+                            value={latitude}
+                            required
+                            type="text"
+                            className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="longitude" className="block text-sm font-semibold text-gray-700">Longitude:</label>
+                        <input
+                            id="longitude"
+                            onChange={(e) => setLongitude(e.target.value)}
+                            value={longitude}
+                            required
+                            type="text"
                             className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>

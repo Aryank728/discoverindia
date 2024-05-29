@@ -4,6 +4,8 @@ import { app } from '../firebase';
 import { getAuth, createUserWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import bcrypt from 'bcryptjs';
 import { useNavigate } from 'react-router-dom';
+import LottieAnimation from '../Components/animation';
+import contactAnimation from '../asset/animation/Animation - Signup.json';
 
 const db = getDatabase(app);
 const auth = getAuth(app);
@@ -116,6 +118,9 @@ function SignupForm() {
 
     return (
         <div className="flex justify-center items-center h-screen">
+            <div className="flex justify-center">
+                <LottieAnimation animationData={contactAnimation} />
+            </div>
             <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-lg">
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <h2 className="text-2xl font-semibold text-center">Signup</h2>

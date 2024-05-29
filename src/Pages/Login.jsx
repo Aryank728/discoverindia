@@ -4,6 +4,8 @@ import { app } from '../firebase';
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { Tilt } from 'react-tilt';
+import LottieAnimation from '../Components/animation';
+import contactAnimation from '../asset/animation/Animation - login.json';
 // import { useAuth } from '../Context/AuthContext';
 
 const db = getDatabase(app);
@@ -84,6 +86,9 @@ function LoginForm() {
 
     return (
         <div className="flex justify-center items-center h-screen">
+            <div className="flex justify-center">
+                <LottieAnimation animationData={contactAnimation} />
+            </div>
             <Tilt
                 className="tilt-container"
                 options={{ max: 25, scale: 1.05 }}
@@ -129,6 +134,7 @@ function LoginForm() {
                             Don't have an account? Signup
                         </button>
                     </div>
+
                 </div>
             </Tilt>
         </div>

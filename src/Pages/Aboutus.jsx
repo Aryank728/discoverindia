@@ -26,52 +26,45 @@ const AboutUs = () => {
             github: 'https://github.com/brajeshkrjha/',
             linkedin: 'https://www.linkedin.com/in/brajeshkrjha/',
             portfolio: 'https://brajesh.netlify.app/'
-        },
-        {
-            name: 'Israt Parveen',
-            role: 'Designer',
-            description: 'Israt designs our website and logo using Figma and Canva. Her creative vision and expertise in design tools help us create visually appealing and user-friendly designs. Israt\'s dedication to aesthetics ensures that our project looks professional and inviting.',
-            imageUrl: 'https://via.placeholder.com/150',
-            github: 'https://github.com/isratparveen',
-            linkedin: 'https://www.linkedin.com/in/israt-parveen/',
-            portfolio: 'https://israt.com'
         }
     ];
 
     return (
         <>
             <Navbar />
-            <section className="bg-white-100 py-12">
-                <div className="container mx-auto">
-                    <h2 className="text-3xl font-semibold text-center mb-8">About Us</h2>
+            <section className="bg-gray-100 py-12">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-4xl font-semibold text-center mb-8">About Us</h2>
                     <div className="text-center mb-8">
-                        <p className="text-xl mb-4">
+                        <p className="text-xl text-gray-700 mb-4">
                             Welcome to our project! We are a dedicated team of developers passionate about creating innovative and user-friendly solutions. Our diverse backgrounds and skills come together to build something truly special. Meet the team:
                         </p>
                     </div>
-                    <div className="flex justify-center">
+                    <div className="flex justify-center mb-8">
                         <LottieAnimation animationData={contactAnimation} />
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {contributors.map((contributor, index) => (
-                            <div key={index} className="bg-white p-6 rounded-lg shadow-lg text-center">
-                                <img src={contributor.imageUrl} alt={contributor.name} className="w-32 h-32 rounded-full mx-auto mb-4" />
-                                <h3 className="text-2xl font-semibold mb-2">{contributor.name}</h3>
-                                <p className="text-gray-700 mb-4">{contributor.role}</p>
-                                <p className="text-gray-700 mb-4">{contributor.description}</p>
-                                <div className="flex justify-center space-x-4">
-                                    <a href={contributor.github} target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-black transition duration-300">
-                                        <FaGithub size={30} />
-                                    </a>
-                                    <a href={contributor.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-blue-900 transition duration-300">
-                                        <FaLinkedin size={30} />
-                                    </a>
-                                    <a href={contributor.portfolio} target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-black transition duration-300">
-                                        <FaLink size={30} />
-                                    </a>
+                    <div className="flex justify-center">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {contributors.map((contributor, index) => (
+                                <div key={index} className="bg-white p-6 rounded-lg shadow-lg text-center transform transition duration-300 hover:scale-105">
+                                    <img src={contributor.imageUrl} alt={contributor.name} className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-gray-200" />
+                                    <h3 className="text-2xl font-semibold mb-2">{contributor.name}</h3>
+                                    <p className="text-gray-700 mb-4">{contributor.role}</p>
+                                    <p className="text-gray-600 mb-4">{contributor.description}</p>
+                                    <div className="flex justify-center space-x-4">
+                                        <a href={contributor.github} target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-black transition duration-300">
+                                            <FaGithub size={30} />
+                                        </a>
+                                        <a href={contributor.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-blue-900 transition duration-300">
+                                            <FaLinkedin size={30} />
+                                        </a>
+                                        <a href={contributor.portfolio} target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-black transition duration-300">
+                                            <FaLink size={30} />
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>

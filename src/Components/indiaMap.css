@@ -1,0 +1,258 @@
+.svg-map {
+    width: 100%;
+    height: auto;
+    stroke: #666;
+    stroke-width: 1;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.svg-map__location {
+    cursor: pointer;
+}
+
+.svg-map__location:focus,
+.svg-map__location:hover {
+    outline: 0;
+}
+
+/* Specific colors for each state with beautiful gradient on hover */
+.AndhraPradesh {
+    fill: #FF6347;
+}
+
+.AndhraPradesh:hover {
+    fill: linear-gradient(135deg, #FF6347, #FFA07A);
+}
+
+.ArunachalPradesh {
+    fill: #4682B4;
+}
+
+.ArunachalPradesh:hover {
+    fill: linear-gradient(135deg, #4682B4, #B0C4DE);
+}
+
+.Assam {
+    fill: #32CD32;
+}
+
+.Assam:hover {
+    fill: linear-gradient(135deg, #32CD32, #98FB98);
+}
+
+.Bihar {
+    fill: #FFD700;
+}
+
+.Bihar:hover {
+    fill: linear-gradient(135deg, #FFD700, #FFECB3);
+}
+
+.Chhattisgarh {
+    fill: #FF69B4;
+}
+
+.Chhattisgarh:hover {
+    fill: linear-gradient(135deg, #FF69B4, #FFB6C1);
+}
+
+.Goa {
+    fill: #8A2BE2;
+}
+
+.Goa:hover {
+    fill: linear-gradient(135deg, #8A2BE2, #BA55D3);
+}
+
+.Gujarat {
+    fill: #FF4500;
+}
+
+.Gujarat:hover {
+    fill: linear-gradient(135deg, #FF4500, #FF7F50);
+}
+
+.Haryana {
+    fill: #2E8B57;
+}
+
+.Haryana:hover {
+    fill: linear-gradient(135deg, #2E8B57, #66CDAA);
+}
+
+.HimachalPradesh {
+    fill: #DA70D6;
+}
+
+.HimachalPradesh:hover {
+    fill: linear-gradient(135deg, #DA70D6, #EE82EE);
+}
+
+.Jharkhand {
+    fill: #1E90FF;
+}
+
+.Jharkhand:hover {
+    fill: linear-gradient(135deg, #1E90FF, #87CEFA);
+}
+
+.Karnataka {
+    fill: #FF1493;
+}
+
+.Karnataka:hover {
+    fill: linear-gradient(135deg, #FF1493, #FF69B4);
+}
+
+.Kerala {
+    fill: #00FF7F;
+}
+
+.Kerala:hover {
+    fill: linear-gradient(135deg, #00FF7F, #7CFC00);
+}
+
+.MadhyaPradesh {
+    fill: #8B0000;
+}
+
+.MadhyaPradesh:hover {
+    fill: linear-gradient(135deg, #8B0000, #CD5C5C);
+}
+
+.Maharashtra {
+    fill: #808000;
+}
+
+.Maharashtra:hover {
+    fill: linear-gradient(135deg, #808000, #BDB76B);
+}
+
+.Manipur {
+    fill: #00CED1;
+}
+
+.Manipur:hover {
+    fill: linear-gradient(135deg, #00CED1, #AFEEEE);
+}
+
+.Meghalaya {
+    fill: #FF00FF;
+}
+
+.Meghalaya:hover {
+    fill: linear-gradient(135deg, #FF00FF, #FFB6C1);
+}
+
+.Mizoram {
+    fill: #8A2BE2;
+}
+
+.Mizoram:hover {
+    fill: linear-gradient(135deg, #8A2BE2, #BA55D3);
+}
+
+.Nagaland {
+    fill: #FF8C00;
+}
+
+.Nagaland:hover {
+    fill: linear-gradient(135deg, #FF8C00, #FFD700);
+}
+
+.Odisha {
+    fill: #B8860B;
+}
+
+.Odisha:hover {
+    fill: linear-gradient(135deg, #B8860B, #FFD700);
+}
+
+.Punjab {
+    fill: #32CD32;
+}
+
+.Punjab:hover {
+    fill: linear-gradient(135deg, #32CD32, #98FB98);
+}
+
+.Rajasthan {
+    fill: #8B4513;
+}
+
+.Rajasthan:hover {
+    fill: linear-gradient(135deg, #8B4513, #DEB887);
+}
+
+.Sikkim {
+    fill: #A52A2A;
+}
+
+.Sikkim:hover {
+    fill: linear-gradient(135deg, #A52A2A, #F4A460);
+}
+
+.TamilNadu {
+    fill: #7FFF00;
+}
+
+.TamilNadu:hover {
+    fill: linear-gradient(135deg, #7FFF00, #ADFF2F);
+}
+
+.Telangana {
+    fill: #D2691E;
+}
+
+.Telangana:hover {
+    fill: linear-gradient(135deg, #D2691E, #F4A460);
+}
+
+.Tripura {
+    fill: #6495ED;
+}
+
+.Tripura:hover {
+    fill: linear-gradient(135deg, #6495ED, #B0E0E6);
+}
+
+.UttarPradesh {
+    fill: #DC143C;
+}
+
+.UttarPradesh:hover {
+    fill: linear-gradient(135deg, #DC143C, #FF6347);
+}
+
+.Uttarakhand {
+    fill: #008B8B;
+}
+
+.Uttarakhand:hover {
+    fill: linear-gradient(135deg, #008B8B, #20B2AA);
+}
+
+#jk {
+    fill: #6A5ACD;
+}
+
+#jk:hover {
+    fill: linear-gradient(135deg, #6A5ACD, #b6adf0);
+}
+
+#dl {
+    fill: #8A2BE2;
+}
+
+#dl:hover {
+    fill: linear-gradient(135deg, #6A5ACD, #b6adf0);
+}
+
+.WestBengal {
+    fill: #B22222;
+}
+
+.WestBengal:hover {
+    fill: linear-gradient(135deg, #B22222, #FF4500);
+}

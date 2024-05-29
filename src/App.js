@@ -9,6 +9,7 @@ import PalaceForm from './Pages/PalaceForm';
 import Constitution from './Pages/Constitution';
 import Dashboard from "./Pages/dashBoard";
 import Contact from "./Pages/contact";
+import About from "./Pages/Aboutus";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/" element={<Sample />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
           <Route path="/constitution" element={<Constitution />} />
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/stateform" element={<AdminForm />} />

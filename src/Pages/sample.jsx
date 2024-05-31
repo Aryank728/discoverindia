@@ -3,6 +3,7 @@ import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import Map from "../Components/indiaMap";
 import SlideShow from "../Components/Slides";
+import Mandala from "../asset/mandala logo.png";
 import BIRDS from 'vanta/dist/vanta.birds.min';
 import VanillaTilt from 'vanilla-tilt';
 import map from "../asset/map.jpg";
@@ -57,13 +58,15 @@ export default function Sample() {
             <div className="min-h-screen flex flex-col bg-gradient-animated bg-[length:400%_400%] animate-gradient-animate relative overflow-hidden">
                 <div ref={vantaRef} className="absolute inset-0 z-0"></div>
                 <Navbar />
-                <div className="flex flex-col lg:flex-row justify-between items-start mt-2 lg:mr-4">
-                    <div className="mt-4 lg:float-left lg:w-1/2 lg:mr-[200px]">
+                <div className="flex flex-col lg:flex-row justify-between items-start mt-2 lg:mr-4 relative">
+                    <img src={Mandala} alt="Mandala Art" className="mandala-art absolute z-0" />
+                    <div className="text-container mt-4 lg:float-left lg:w-1/2 lg:mr-[200px] relative z-10">
                         <h2 className="font-poppins text-6xl text-[#d93b3b] font-bold mb-4 mt-[210px]">TOUR INDIA</h2>
                         <p className="font-roboto text-4xl text-[#F2B705] ml-10">
                             Delve into the vibrant tapestry of India's states and territories. Our comprehensive maps and insightful information will guide you through the rich cultural and administrative landscapes of this incredible nation. Perfect for explorers, students, and curious minds alike.
                         </p>
                     </div>
+
                     <div className="hidden lg:block lg:w-[800px] relative p-4">
                         <div className="w-full h-[600px]">
                             <Map />

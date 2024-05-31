@@ -19,3 +19,35 @@
 .animate-gradient-animate {
     animation: gradientBG 15s ease infinite;
 }
+
+
+/* mandala */
+
+.mandala-art {
+    width: 800px;
+    /* Adjust size as needed */
+    height: 800px;
+    /* Adjust size as needed */
+    top: 60%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    animation: rotate 10s linear infinite;
+    opacity: 0.5;
+    /* Increase the opacity */
+}
+
+@keyframes rotate {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.text-container {
+    position: relative;
+    z-index: 10;
+    /* Ensure text is above the mandala */
+}

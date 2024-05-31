@@ -4,6 +4,7 @@ import { collection, getDocs, doc, getDoc, addDoc, deleteDoc } from 'firebase/fi
 import { getDownloadURL, ref as storageRef } from 'firebase/storage';
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
+import Spinner from "../Components/spinner"; // Import the Spinner component
 
 const Dashboard = () => {
     const [data, setData] = useState([]);
@@ -111,55 +112,61 @@ const Dashboard = () => {
     };
 
     return (
-        <div>
+        <div className="flex flex-col min-h-screen bg-gray-100">
             <Navbar />
-            <div className="container mx-auto mt-8">
-                <h2 className="text-3xl font-bold mb-4">Dashboard</h2>
-                {feedback && <div className="alert">{feedback}</div>}
+            <header className="relative bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-24">
+                <div className="absolute inset-0 bg-cover bg-center opacity-70" style={{ backgroundImage: "url('/path/to/your/hero-image.jpg')" }}></div>
+                <div className="container mx-auto px-4 relative z-10 text-center">
+                    <h1 className="text-5xl font-bold mb-6">Dashboard</h1>
+                    <p className="text-2xl">Manage and review submitted data</p>
+                </div>
+            </header>
+            <main className="flex-grow container mx-auto py-10 px-4">
+                {feedback && <div className="bg-yellow-100 text-yellow-800 p-4 rounded mb-4 shadow">{feedback}</div>}
                 {isLoading ? (
-                    <p>Loading...</p>
+                    <Spinner loading={isLoading} /> // Use the Spinner component when loading
                 ) : (
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full bg-white">
+                    <div className="overflow-x-auto bg-white shadow-md rounded-lg">
+                        <table className="min-w-full bg-white rounded-lg overflow-hidden">
                             <thead>
-                                <tr>
-                                    <th className="py-2 px-4 border">Username</th>
-                                    <th className="py-2 px-4 border">State</th>
-                                    <th className="py-2 px-4 border">Place Details</th>
-                                    <th className="py-2 px-4 border">Actions</th>
+                                <tr className="bg-blue-500 text-white">
+                                    <th className="py-3 px-4 border">Username</th>
+                                    <th className="py-3 px-4 border">State</th>
+                                    <th className="py-3 px-4 border">Place Details</th>
+                                    <th className="py-3 px-4 border">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((item) => (
-                                    <tr key={item.id}>
-                                        <td className="py-2 px-4 border">{item.userName}</td>
-                                        <td className="py-2 px-4 border">{item.state}</td> {/* Display state */}
-                                        <td className="py-2 px-4 border">
+                                {data.map((item, index) => (
+                                    <tr key={item.id} className={`hover:bg-gray-100 ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
+                                        <td className="py-3 px-4 border">{item.userName}</td>
+                                        <td className="py-3 px-4 border">{item.state}</td>
+                                        <td className="py-3 px-4 border">
                                             <p className='font-bold'>{item.placeName}</p>
                                             <p>{item.placeDescription}</p>
                                         </td>
-                                        <td className="py-2 px-4 border">
+                                        <td className="py-3 px-4 border flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
                                             <button
                                                 onClick={() => window.open(imageUrls[item.id]?.placeImage || '', '_blank')}
-                                                className="bg-blue-500 text-white py-1 px-3 rounded m-1"
+                                                className="bg-blue-500 text-white py-1 px-3 rounded shadow hover:bg-blue-600"
                                             >
                                                 View Image
                                             </button>
                                             <button
                                                 onClick={() => window.open(`https://www.google.com/maps?q=${item.latitude},${item.longitude}`, '_blank')}
-                                                className="bg-blue-500 text-white py-1 px-3 rounded m-1"
+                                                className="bg-blue-500 text-white py-1 px-3 rounded shadow hover:bg-blue-600"
                                             >
                                                 View Map
                                             </button>
                                             <button
                                                 onClick={() => handleAccept(item.id, item.state)}
-                                                className="bg-green-500 text-white py-1 px-3 rounded m-1"
+                                                className="bg-green-500 text-white py-1 px-3 rounded shadow hover:bg-green-600"
                                             >
                                                 Accept
                                             </button>
                                             <button
                                                 onClick={() => handleReject(item.id)}
-                                                className="bg-red-500 text-white py-1 px-3 rounded m-1"
+                                                className="bg-red-500 text-white py-1 px-3 rounded shadow hover:bg-red-600"
                                             >
                                                 Reject
                                             </button>
@@ -170,12 +177,10 @@ const Dashboard = () => {
                         </table>
                     </div>
                 )}
-            </div>
+            </main>
             <Footer />
         </div>
     );
 }
 
 export default Dashboard;
-
-

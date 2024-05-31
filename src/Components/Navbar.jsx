@@ -60,7 +60,7 @@ const Navbar = () => {
                 </div>
 
                 {dropdown && (
-                    <div onClick={handleDropdownToggle} className="lg:hidden w-full h-full fixed top-24 bg-cover ease-in-out duration-100 bg-transparent">
+                    <div onClick={handleDropdownToggle} className="lg:hidden w-full h-full fixed top-24 backdrop-blur-lg bg-cover ease-in-out duration-100 bg-transparent">
                         <div className="w-full h-[320px] flex-col items-baseline pt-8 gap-4">
                             <ul className="text-center p-0 flex flex-col justify-center w-full gap-y-8 text-yellow-500">
                                 <a href="/" className="leading-normal text-lg no-underline text-white">Home</a>

@@ -10,6 +10,7 @@ import Constitution from './Pages/Constitution';
 import Dashboard from "./Pages/dashBoard";
 import Contact from "./Pages/contact";
 import About from "./Pages/Aboutus";
+import ProtectedRoute from './Components/protectedRoute'; // Import the ProtectedRoute component
 
 function App() {
   return (
@@ -23,7 +24,11 @@ function App() {
           <Route path="/constitution" element={<Constitution />} />
           <Route path="/signup" element={<SignupForm />} />
           <Route path="/stateform" element={<AdminForm />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
           <Route path="/state/andhrapradesh" element={<AndhraPradesh />} />
           <Route path="/placeform" element={<PalaceForm />} />
         </Routes>

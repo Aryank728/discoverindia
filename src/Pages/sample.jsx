@@ -1,17 +1,17 @@
-import React, { useRef, /*useEffect, useState*/ } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import Map from "../Components/indiaMap";
 import SlideShow from "../Components/Slides";
 import Mandala from "../asset/mandala logo.png";
-// import BIRDS from 'vanta/dist/vanta.birds.min';
-// import VanillaTilt from 'vanilla-tilt';
+import BIRDS from 'vanta/dist/vanta.birds.min';
+import VanillaTilt from 'vanilla-tilt';
 import map from "../asset/map.jpg";
 import './sample.css';
 
 export default function Sample() {
-    // const [vantaEffect, setVantaEffect] = useState(null);
-    // const tiltRef = useRef(null);
+    const [vantaEffect, setVantaEffect] = useState(null);
+    const tiltRef = useRef(null);
     const vantaRef = useRef(null);
 
     const slides = [
@@ -23,35 +23,35 @@ export default function Sample() {
         // Add more image paths as needed
     ];
 
-    // useEffect(() => {
-    //     try {
-    //         if (!vantaEffect) {
-    //             setVantaEffect(
-    //                 BIRDS({
-    //                     el: vantaRef.current,
-    //                     color1: 0x1e90ff,
-    //                     color2: 0xff6347,
-    //                     backgroundAlpha: 0.0,
-    //                     waveHeight: 20,
-    //                     shininess: 50,
-    //                     waveSpeed: 1.5,
-    //                     zoom: 0.75,
-    //                 })
-    //             );
-    //         }
-    //         VanillaTilt.init(tiltRef.current, {
-    //             max: 25,
-    //             speed: 400,
-    //             glare: true,
-    //             "max-glare": 0.5,
-    //         });
-    //     } catch (error) {
-    //         console.error('Initialization error:', error);
-    //     }
-    //     return () => {
-    //         if (vantaEffect) vantaEffect.destroy();
-    //     };
-    // }, [vantaEffect]);
+    useEffect(() => {
+        try {
+            if (!vantaEffect) {
+                setVantaEffect(
+                    BIRDS({
+                        el: vantaRef.current,
+                        color1: 0x1e90ff,
+                        color2: 0xff6347,
+                        backgroundAlpha: 0.0,
+                        waveHeight: 20,
+                        shininess: 50,
+                        waveSpeed: 1.5,
+                        zoom: 0.75,
+                    })
+                );
+            }
+            VanillaTilt.init(tiltRef.current, {
+                max: 25,
+                speed: 400,
+                glare: true,
+                "max-glare": 0.5,
+            });
+        } catch (error) {
+            console.error('Initialization error:', error);
+        }
+        return () => {
+            if (vantaEffect) vantaEffect.destroy();
+        };
+    }, [vantaEffect]);
 
     return (
         <>

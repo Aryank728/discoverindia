@@ -1,18 +1,19 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
+import ErrorPage from '../Pages/errorPage';
 
 const ProtectedRoute = ({ children }) => {
     const { currentUser } = useAuth();
 
     if (!currentUser) {
-        // Redirect to login if the user is not authenticated
-        return <Navigate to="/login" />;
+        // Redirect to error page if the user is not authenticated
+        return <ErrorPage />;
     }
 
     if (currentUser.email !== "kumararyan1929@gmail.com") {
-        // Redirect to home if the user's email is not authorized
-        return <Navigate to="/" />;
+        // Redirect to error page if the user's email is not authorized
+        return <ErrorPage />;
     }
 
     return children;

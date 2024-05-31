@@ -13,64 +13,64 @@ const Dashboard = () => {
     const [feedback, setFeedback] = useState('');
 
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, "review"));
+                const fetchedData = [];
+                const imagePromises = [];
+
+                querySnapshot.forEach((doc) => {
+                    const docData = doc.data();
+
+                    const convertedData = {
+                        ...docData,
+                        formationDate: docData.formationDate ? docData.formationDate.toDate().toDateString() : '',
+                        timestamp: docData.timestamp ? docData.timestamp.toDate() : new Date(0), // Fallback to epoch if timestamp is missing
+                        state: docData.state // Make sure state is included
+                    };
+
+                    fetchedData.push({ id: doc.id, ...convertedData });
+
+                    if (docData.placeImagePath) {
+                        imagePromises.push(
+                            getDownloadURL(storageRef(image, docData.placeImagePath)).then((url) => ({
+                                id: doc.id,
+                                type: 'placeImage',
+                                url
+                            }))
+                        );
+                    }
+
+                    if (docData.stateImagePath) {
+                        imagePromises.push(
+                            getDownloadURL(storageRef(image, docData.stateImagePath)).then((url) => ({
+                                id: doc.id,
+                                type: 'stateImage',
+                                url
+                            }))
+                        );
+                    }
+                });
+
+                const images = await Promise.all(imagePromises);
+                const imageUrls = images.reduce((acc, { id, type, url }) => {
+                    if (!acc[id]) acc[id] = {};
+                    acc[id][type] = url;
+                    return acc;
+                }, {});
+
+                // Sort the data by timestamp in descending order
+                fetchedData.sort((a, b) => b.timestamp - a.timestamp);
+
+                setData(fetchedData);
+                setImageUrls(imageUrls);
+                setIsLoading(false);
+            } catch (error) {
+                console.error("Error fetching documents: ", error);
+            }
+        };
+
         if (isLoading) {
-            const fetchData = async () => {
-                try {
-                    const querySnapshot = await getDocs(collection(db, "review"));
-                    const fetchedData = [];
-                    const imagePromises = [];
-
-                    querySnapshot.forEach((doc) => {
-                        const docData = doc.data();
-
-                        const convertedData = {
-                            ...docData,
-                            formationDate: docData.formationDate ? docData.formationDate.toDate().toDateString() : '',
-                            timestamp: docData.timestamp ? docData.timestamp.toDate() : new Date(0), // Fallback to epoch if timestamp is missing
-                            state: docData.state // Make sure state is included
-                        };
-
-                        fetchedData.push({ id: doc.id, ...convertedData });
-
-                        if (docData.placeImagePath) {
-                            imagePromises.push(
-                                getDownloadURL(storageRef(image, docData.placeImagePath)).then((url) => ({
-                                    id: doc.id,
-                                    type: 'placeImage',
-                                    url
-                                }))
-                            );
-                        }
-
-                        if (docData.stateImagePath) {
-                            imagePromises.push(
-                                getDownloadURL(storageRef(image, docData.stateImagePath)).then((url) => ({
-                                    id: doc.id,
-                                    type: 'stateImage',
-                                    url
-                                }))
-                            );
-                        }
-                    });
-
-                    const images = await Promise.all(imagePromises);
-                    const imageUrls = images.reduce((acc, { id, type, url }) => {
-                        if (!acc[id]) acc[id] = {};
-                        acc[id][type] = url;
-                        return acc;
-                    }, {});
-
-                    // Sort the data by timestamp in descending order
-                    fetchedData.sort((a, b) => b.timestamp - a.timestamp);
-
-                    setData(fetchedData);
-                    setImageUrls(imageUrls);
-                    setIsLoading(false);
-                } catch (error) {
-                    console.error("Error fetching documents: ", error);
-                }
-            };
-
             fetchData();
         }
     }, [isLoading]);

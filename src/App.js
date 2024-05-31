@@ -10,7 +10,8 @@ import Constitution from './Pages/Constitution';
 import Dashboard from "./Pages/dashBoard";
 import Contact from "./Pages/contact";
 import About from "./Pages/Aboutus";
-import ProtectedRoute from './Components/protectedRoute'; // Import the ProtectedRoute component
+import ProtectedRoute from './Components/protectedRoute';
+import ErrorPage from './Pages/errorPage';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           } />
           <Route path="/state/andhrapradesh" element={<AndhraPradesh />} />
           <Route path="/placeform" element={<PalaceForm />} />
+          <Route path="*" element={<ErrorPage />} /> {/* Catch all undefined routes */}
         </Routes>
       </div>
     </Router>

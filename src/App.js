@@ -23,7 +23,11 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/constitution" element={<Constitution />} />
           <Route path="/signup" element={<SignupForm />} />
-          <Route path="/stateform" element={<AdminForm />} />
+          <Route path="/stateform" element={
+            <ProtectedRoute>
+              <AdminForm />
+            </ProtectedRoute>
+          } />
           <Route path="/dashboard" element={
             <ProtectedRoute>
               <Dashboard />

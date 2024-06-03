@@ -5,11 +5,11 @@ import "slick-carousel/slick/slick-theme.css";
 
 const Footer = () => {
     const quotes = [
-        { text: "The journey of a thousand miles begins with one step.", author: "Lao Tzu" },
-        { text: "Life is what happens when you're busy making other plans.", author: "John Lennon" },
-        { text: "Get busy living or get busy dying.", author: "Stephen King" },
-        { text: "You only live once, but if you do it right, once is enough.", author: "Mae West" },
-        { text: "Many of life's failures are people who did not realize how close they were to success when they gave up.", author: "Thomas A. Edison" }
+        { text: "A nation’s strength lies in the unity of its people and their unwavering commitment to a common vision.", author: "Sardar Vallabh Bhai Patel" },
+        { text: "The true measure of a nation’s greatness is how it uplifts the weakest sections of society.", author: "Sardar Vallabh Bhai Patel" },
+        { text: "Manpower without unity is not a strength unless it is harmonised and united properly, then it becomes a spiritual power.", author: "Sardar Vallabh Bhai Patel" },
+        { text: "Every Indian should now forget that he is a Rajput, a Sikh or a Jat. He must remember that he is an Indian.", author: "Sardar Vallabh Bhai Patel" },
+        { text: "The negligence of a few could easily lead to the suffering of many.", author: "Sardar Vallabh Bhai Patel" }
     ];
 
     const settings = {

@@ -3,18 +3,42 @@
 
 <head>
   <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <link rel="icon" href="discoverindia.vercel.app/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Web site created using create-react-app" />
-  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <meta name="description"
+    content="Discover India - Your ultimate guide to exploring the rich cultural heritage, vibrant traditions, and breathtaking landscapes of India." />
+  <meta name="keywords" content="India, Discover India, Travel, Culture, Heritage, Landscapes, Tourism" />
+  <meta name="author" content="Aryan Kumar" />
+  <link rel="apple-touch-icon" href="discoverindia.vercel.app/logo192.png" />
+  <link rel="manifest" href="discoverindia.vercel.app/manifest.json" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap"
     rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.waves.min.js"></script>
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Discover India" />
+  <meta property="og:description"
+    content="Your ultimate guide to exploring the rich cultural heritage, vibrant traditions, and breathtaking landscapes of India." />
+  <meta property="og:image" content="discoverindia.vercel.app/og-image.png" />
+  <meta property="og:url" content="https://discoverindia.vercel.app/" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Discover India" />
+  <meta name="twitter:description"
+    content="Your ultimate guide to exploring the rich cultural heritage, vibrant traditions, and breathtaking landscapes of India." />
+  <meta name="twitter:image" content="discoverindia.vercel.app/og-image.png" />
+  <meta name="twitter:url" content="https://discoverindia.vercel.app/" />
+
   <script>
-    VANTA.WAVES('#my-background')
+    document.addEventListener("DOMContentLoaded", function () {
+      VANTA.WAVES({
+        el: "#my-background"
+      });
+    });
   </script>
   <title>Discover India</title>
 </head>

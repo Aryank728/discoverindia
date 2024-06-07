@@ -115,9 +115,3 @@ For any questions or suggestions, please contact:
 * **GitHub:** [Aryank728](https://github.com/Aryank728)
 
 We hope you enjoy discovering India with us!
-
----
-
-<p align="center">
-  <sub>Crafted with ❤️ by Aryan Kumar</sub>
-</p>

@@ -6,6 +6,7 @@ import { getDownloadURL, ref as storageRef } from 'firebase/storage';
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import Sidebar from "../Components/Sidebar";
+import { Circles } from 'react-loader-spinner';
 
 const StateComponent = ({ collectionName }) => {
     const [data, setData] = useState([]);
@@ -77,13 +78,24 @@ const StateComponent = ({ collectionName }) => {
     return (
         <div>
             <Navbar />
-            {data.length > 0 ? (
+            {isLoading ? (
+                <div className="flex justify-center items-center h-screen">
+                    <Circles
+                        height="100"
+                        width="100"
+                        color="#4fa94d"
+                        ariaLabel="circles-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                        visible={true}
+                    />
+                </div>
+            ) : (
                 data.map((item) => {
                     const stateImage = imageUrls[item.id]?.stateImage || "";
 
                     return (
                         <div key={item.id} className="mb-8">
-                            {/* Check if population field is present */}
                             {item.hasOwnProperty('population') && (
                                 <Sidebar
                                     imageSrc={stateImage}
@@ -99,16 +111,16 @@ const StateComponent = ({ collectionName }) => {
                                     <img src={imageUrls[item.id].placeImage} alt="Place" />
                                 </div>
                             )}
-                            {item.latitude && item.longitude && (
+                            {item.iframeCode && ( // Ensuring iframeCode exists before rendering iframe
                                 <div className="mt-4">
                                     <iframe
-                                        src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1000!2d${item.longitude}!3d${item.latitude}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z${item.latitude},${item.longitude}!5e0!3m2!1sen!2sin!4v1716888936335!5m2!1sen!2sin`}
-                                        width="600"
+                                        srcDoc={item.iframeCode} // Use srcDoc instead of src
+                                        width="550"
                                         height="450"
                                         style={{ border: 0 }}
                                         allowFullScreen=""
                                         loading="lazy"
-                                        referrerPolicy="no-referrer-when-downgrade"
+                                        referrerPolicy="no-ref errer-when-downgrade"
                                     ></iframe>
                                 </div>
                             )}
@@ -119,8 +131,6 @@ const StateComponent = ({ collectionName }) => {
                         </div>
                     );
                 })
-            ) : (
-                <p>Loading...</p>
             )}
             <Footer />
         </div>

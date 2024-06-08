@@ -24,8 +24,7 @@ function PalaceForm() {
     const [placeName, setPlaceName] = useState('');
     const [placeImage, setPlaceImage] = useState(null);
     const [placeDescription, setPlaceDescription] = useState('');
-    const [latitude, setLatitude] = useState('');
-    const [longitude, setLongitude] = useState('');
+    const [iframeCode, setIframeCode] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const navigate = useNavigate();
@@ -55,12 +54,11 @@ function PalaceForm() {
             const placeImagePath = await uploadImage(placeImage, 'placeimage');
 
             const placeData = {
-                state, // Include state in placeData
+                state,
                 placeName,
                 placeDescription,
                 placeImagePath,
-                latitude,
-                longitude
+                iframeCode
             };
 
             if (userEmail === AUTHORIZED_EMAIL) {
@@ -90,8 +88,7 @@ function PalaceForm() {
         setPlaceName('');
         setPlaceImage(null);
         setPlaceDescription('');
-        setLatitude('');
-        setLongitude('');
+        setIframeCode('');
         document.getElementById('placeImage').value = ''; // <--- Reset file input
     };
 
@@ -136,28 +133,6 @@ function PalaceForm() {
                             className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
-                    <div>
-                        <label htmlFor="latitude" className="block text-sm font-semibold text-gray-700">Latitude:</label>
-                        <input
-                            id="latitude"
-                            onChange={(e) => setLatitude(e.target.value)}
-                            value={latitude}
-                            required
-                            type="text"
-                            className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="longitude" className="block text-sm font-semibold text-gray-700">Longitude:</label>
-                        <input
-                            id="longitude"
-                            onChange={(e) => setLongitude(e.target.value)}
-                            value={longitude}
-                            required
-                            type="text"
-                            className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                        />
-                    </div>
                     <div className="col-span-1 md:col-span-2">
                         <label htmlFor="placeDescription" className="block text-sm font-semibold text-gray-700">Place Description:</label>
                         <textarea
@@ -168,20 +143,31 @@ function PalaceForm() {
                             required
                             placeholder="Enter Place Description"
                             className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            style={{ whiteSpace: 'pre-line' }} // Preserve line breaks and spaces
+                        />
+                    </div>
+                    <div className="col-span-1 md:col-span-2">
+                        <label htmlFor="iframeCode" className="block text-sm font-semibold text-gray-700">Iframe Code:</label>
+                        <textarea
+                            id="iframeCode"
+                            onChange={(e) => setIframeCode(e.target.value)}
+                            value={iframeCode}
+                            rows="4"
+                            required
+                            placeholder="Enter Iframe Code"
+                            className="mt-1 p-3 block w-full border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className={`col-span-1 md:col-span-2 w-full py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-opacity ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    >
+                        className={`col-span-1 md:col-span-2 w-full py-3 bg-blue-500 text-white font-bold rounded-lg hover focus focus focus focus transition-opacity ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}>
                         {isSubmitting ? 'Submitting...' : 'Submit'}
                     </button>
                 </form>
                 <button
                     onClick={() => navigate(-1)}
-                    className="mt-4 w-full py-3 bg-gray-500 text-white font-bold rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-                >
+                    className="mt-4 w-full py-3 bg-gray-500 text-white font-bold rounded-lg hover focus focus focus focus">
                     Back
                 </button>
                 {showModal && (
@@ -198,4 +184,3 @@ function PalaceForm() {
 }
 
 export default PalaceForm;
-
